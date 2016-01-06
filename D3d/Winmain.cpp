@@ -41,55 +41,6 @@ TestD3DApp::~TestD3DApp()
 
 }
 
-#ifdef TEST
-void TestD3DApp::LoadTextureBuffer()
-{
-    const int count = 24;
-    Vertex vertex[count] =
-    {
-        { 9.9842441128807f, 0.0f, 0.0,  12800 },
-        { 0.0f, 0.0f, 0.0f,  25600 },
-        { 0.0f, 9.9842441128807f, 0.0f, 51200 },
-
-        { 9.9842441128807f,0.0f,0.249406577559969f,  D3DCOLOR_XRGB(0, 254, 0) },
-        { 0.0f,0.0f,0.249406577559969f,  D3DCOLOR_XRGB(254, 254, 0) },
-        { 0.0f,9.9842441128807f,0.249406577559969f,  D3DCOLOR_XRGB(0, 254, 0) },
-
-        { 0.0f,9.9842441128807f,0.249406577559969f,  D3DCOLOR_XRGB(0, 254, 0) },
-        { 0.0f,0.0f,0.0f,  D3DCOLOR_XRGB(0, 254, 0) },
-        { 0.0f,0.0f,0.249406577559969f,  D3DCOLOR_XRGB(0, 254, 0) },
-
-        { 0.0f,0.0f,0.0f,  D3DCOLOR_XRGB(0, 254, 0) },
-        { 0.0f,9.9842441128807f,0.249406577559969f,  D3DCOLOR_XRGB(0, 254, 0) },
-        { 0.0f,9.9842441128807f,0.0f,  D3DCOLOR_XRGB(0, 254, 0) },
-
-        { 0.0f,9.9842441128807f,0.0f,  D3DCOLOR_XRGB(0, 254, 0) },
-        { 9.9842441128807f,0.0f,0.249406577559969f,  D3DCOLOR_XRGB(0, 254, 0) },
-        { 9.9842441128807f,0.0f,0.0f,  D3DCOLOR_XRGB(0, 254, 0) },
-
-        { 9.9842441128807f,0.0f,0.249406577559969f,  D3DCOLOR_XRGB(0, 254, 0) },
-        { 0.0f,9.9842441128807f,0.0f,  D3DCOLOR_XRGB(0, 254, 0) },
-        { 0.0f,9.9842441128807f,0.249406577559969f,  D3DCOLOR_XRGB(0, 254, 0) },
-
-        { 9.9842441128807f,0.0f,0.249406577559969f,  D3DCOLOR_XRGB(0, 254, 0) },
-        { 0.0f,0.0f,0.0f,  D3DCOLOR_XRGB(0, 254, 0) },
-        { 9.9842441128807f,0.0f,0.0f,  D3DCOLOR_XRGB(0, 254, 0) },
-
-        { 0.0f,0.0f,0.0f,  D3DCOLOR_XRGB(0, 254, 0) },
-        { 9.9842441128807f,0.0f,0.249406577559969f,  D3DCOLOR_XRGB(0, 254, 0) },
-        { 0.0f,0.0f,0.249406577559969f, D3DCOLOR_XRGB(0, 254, 0) }
-    };
-
-    int vertexCount = 24;
-    m_pDevice3D->CreateVertexBuffer(vertexCount * sizeof(Vertex), 0, Vertex::fvf, D3DPOOL_MANAGED, &_pVB, NULL);
-    void* pVerts;
-    _pVB->Lock(0, vertexCount * sizeof(Vertex), (void**)&pVerts, 0);
-    memcpy(pVerts, &vertex, sizeof(vertex));
-    _pVB->Unlock();
-    _nPrimitives = vertexCount / 3;
-}
-#endif
-
 size_t getFilesize(const char* filename) {
     struct stat st;
     if (stat(filename, &st) != 0) {
@@ -100,7 +51,7 @@ size_t getFilesize(const char* filename) {
 
 void TestD3DApp::LoadTextureBuffer()
 {
-    char* path = "C:\\Users\\sushraja\\Source\\Workspaces\\StlParser\\StlParser\\D3d\\Assets\\magnolia.stl";
+    char* path = "C:\\Users\\sushraja\\Source\\Workspaces\\StlParser\\StlParser\\D3d\\Assets\\teapot.stl";
     Tokenizer tokenizer = Tokenizer(path);
     size_t fileSize = getFilesize(path);
     Vertex* pVertex = (Vertex*)malloc(fileSize);
@@ -133,6 +84,7 @@ void TestD3DApp::LoadTextureBuffer()
     _pVB->Lock(0, vertexCount * sizeof(Vertex), (void**)&pVerts, 0);
     memcpy(pVerts, pVertex, vertexCount * sizeof(Vertex));
     _pVB->Unlock();
+    free(pVertex);
     _nPrimitives = vertexCount / 3;
 }
 
